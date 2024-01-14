@@ -40,7 +40,7 @@ def count(text_data: IO[bytes]) -> result_type:
 
 
 def get_result(
-    filename: str, result: result_type, count_bytes: bool, count_lines: bool
+    filename: str, result: result_type, count_bytes: bool, count_lines: bool,count_words:bool
 ) -> str:
     """
     get_result _summary_
@@ -63,18 +63,23 @@ def get_result(
     if count_lines:
         text = text + " {} ".format(newlines)
 
+    if count_words:
+        text = text + " {} ".format(word_count)
+
     if count_bytes:
         text = text + " {} ".format(byte_count)
 
+   
+
     # como manejar el caso por default (?), que deberia mostrar todos
-    else:
+    if not all([count_bytes,count_words,count_lines]):
         text = text + " ".join(result)
     # agregamos el nombre del archivo al final
     text = text + " {}".format(filename)
     return text
 
 
-def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: bool):
+def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: bool,count_words:bool):
     # newline,  word, and byte
 
     # newline, word,  character,  byte,  maximum line length
@@ -91,7 +96,7 @@ def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: boo
             with open(file, "rb") as file_data:
                 result = count(text_data=file_data)
 
-        nuevo_resultado = get_result(filename, result, count_bytes, count_lines)
+        nuevo_resultado = get_result(filename, result, count_bytes, count_lines,count_words)
         # print(result)
 
         click.echo(nuevo_resultado)
@@ -113,9 +118,16 @@ def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: boo
     is_flag=True,
     help="The number of lines in the file.",
 )
-def cli(files, count_bytes, count_lines):
-    print(files, count_bytes, count_lines)
-    word_count(files, count_bytes, count_lines)
+@click.option(
+    "-w",
+    "--words",
+    "count_words",
+    is_flag=True,
+    help="The number of words in the file.",
+)
+def cli(files, count_bytes, count_lines,count_words):
+    print(files, count_bytes, count_lines,count_words)
+    word_count(files, count_bytes, count_lines,count_words)
 
 
 if __name__ == "__main__":
