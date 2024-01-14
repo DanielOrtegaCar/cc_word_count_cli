@@ -4,14 +4,14 @@ Este repositorio contiene el código del desafío de programación [building-wc]
  Mi idea es tomar pequeños desafíos e implementarlos con buenas prácticas, practicando el desarrollo de código y probando nuevas herramientas.
 
 En este repositorio apliqué las librerías/ideas:
-    - Poetry (para la gestión de paquetes)
-    - Click (para crear CLI)
-    - Pytest (para gestionar las pruebas unitarias)
-    - Coverage (para revisar la cobertura de las pruebas de Pytest)
-    - Flake8, Black (como linters y para mantener una misma estructura de código en los diferentes archivos)
-    - Nox (para automatizar parte de la ejecución de los linters y las pruebas)
-    - Pre-commit (para realizar validaciones sobre archivos antes de realizar un nuevo commit)
-    - GIT (donde cada nuevo paso en el desarrollo del código se tomó como una rama distinta)
+* Poetry (para la gestión de paquetes)
+* Click (para crear CLI)
+* Pytest (para gestionar las pruebas unitarias)
+* Coverage (para revisar la cobertura de las pruebas de Pytest)
+* Flake8, Black (como linters y para mantener una misma estructura de código en los diferentes archivos)
+* Nox (para automatizar parte de la ejecución de los linters y las pruebas)
+* Pre-commit (para realizar validaciones sobre archivos antes de realizar un nuevo commit)
+* GIT (donde cada nuevo paso en el desarrollo del código se tomó como una rama distinta)
 
 
 ## Para ejecutarlo
