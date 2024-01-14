@@ -144,7 +144,7 @@ def word_count(
     help="The number of characters in the file.",
 )
 def cli(files, count_bytes, count_lines, count_words, count_chars):
-    print(files, count_bytes, count_lines, count_words, count_chars)
+    # print(files, count_bytes, count_lines, count_words, count_chars)
     word_count(files, count_bytes, count_lines, count_words, count_chars)
 
 
