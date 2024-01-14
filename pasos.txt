@@ -55,7 +55,7 @@ poetry run mypy .
 # un comando para automatizar linters, chequeos de typo y metricas
 poetry add nox
 
-
+nox
 
 # se pueden realizar todos los test antes de hacer commit 
 poetry add pre-commit
