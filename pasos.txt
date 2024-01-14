@@ -1,6 +1,13 @@
+# Paginas Utiles
+https://medium.com/@cristobalcl/set-up-tests-linters-and-type-checking-in-python-projects-in-2020-9cc1b1e2750d
+
+
+# como crear un nuevo paquete con poetry e ir agregando de apoco nuevos paquetes
+
 - poetry new
 - poetry add <package> 
 
+# hay que agregar al pyproyect.toml
 #[tool.poetry.scripts]
 #<nombre-app> = "<carpeta>.<archivo>:<funcion_entrada>"
 el comando sirve para decirle a la aplicacion cual sera la funcion de entrada
@@ -11,3 +18,55 @@ el comando sirve para decirle a la aplicacion cual sera la funcion de entrada
 git checkout -b <nueva_rama> 
 git checkout <rama_existente>
 git rm <file>
+
+
+# agregar los test unitarios a poetry
+poetry add -D pytest
+
+
+#correr los test unitarios 
+poetry run pytest
+
+# agregar coverage
+poetry add -D coverage[toml]
+
+# generar metricas de code coverage
+poetry run coverage run -m pytest && poetry run coverage report -m
+
+
+# agregar linters
+poetry add -D flake8 flake8-bugbear
+
+# luego de agregar las reglas, para ejecutar hacemos:
+poetry run flake8
+
+#sed -i 's/",}/"}/g' config/settings.py
+
+Correr black sobre algunos archivos:
+poetry run black wc_cli/cli.py
+
+
+# agregar chequeos de typo 
+poetry add -D mypy
+
+para correr 
+poetry run mypy .
+
+# un comando para automatizar linters, chequeos de typo y metricas
+poetry add nox
+
+nox
+
+# se pueden realizar todos los test antes de hacer commit 
+poetry add pre-commit
+para eso hay que modificar el .pre-commit-config.yaml 
+# sirve para corregir las versiones de los paquetes
+pre-commit autoupdate
+y ejecutar 
+poetry run pre-commit run --all-files
+
+
+
+# cosas por hacer 
+- mejorar test unitarios
+- ver como corregir flake 8 warnings (corriendo black se puede corregir varios de los warnings)
