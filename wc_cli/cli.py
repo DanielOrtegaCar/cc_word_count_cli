@@ -40,7 +40,8 @@ def count(text_data: IO[bytes]) -> result_type:
 
 
 def get_result(
-    filename: str, result: result_type, count_bytes: bool, count_lines: bool,count_words:bool
+    filename: str, result: result_type, count_bytes: bool, count_lines: bool,count_words:bool,
+    count_chars:bool
 ) -> str:
     """
     get_result _summary_
@@ -69,17 +70,20 @@ def get_result(
     if count_bytes:
         text = text + " {} ".format(byte_count)
 
+    if count_bytes:
+        text = text + " {} ".format(count_chars)
+
    
 
     # como manejar el caso por default (?), que deberia mostrar todos
-    if not all([count_bytes,count_words,count_lines]):
+    if not all([count_bytes,count_words,count_lines,count_chars]):
         text = text + " ".join(result)
     # agregamos el nombre del archivo al final
     text = text + " {}".format(filename)
     return text
 
 
-def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: bool,count_words:bool):
+def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: bool,count_words:bool,count_chars:bool):
     # newline,  word, and byte
 
     # newline, word,  character,  byte,  maximum line length
@@ -96,7 +100,7 @@ def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: boo
             with open(file, "rb") as file_data:
                 result = count(text_data=file_data)
 
-        nuevo_resultado = get_result(filename, result, count_bytes, count_lines,count_words)
+        nuevo_resultado = get_result(filename, result, count_bytes, count_lines,count_words,count_chars)
         # print(result)
 
         click.echo(nuevo_resultado)
@@ -125,9 +129,16 @@ def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: boo
     is_flag=True,
     help="The number of words in the file.",
 )
-def cli(files, count_bytes, count_lines,count_words):
-    print(files, count_bytes, count_lines,count_words)
-    word_count(files, count_bytes, count_lines,count_words)
+@click.option(
+    "-m",
+    "--characters",
+    "count_chars",
+    is_flag=True,
+    help="The number of characters in the file.",
+)
+def cli(files, count_bytes, count_lines,count_words,count_chars):
+    print(files, count_bytes, count_lines,count_words,count_chars)
+    word_count(files, count_bytes, count_lines,count_words,count_chars)
 
 
 if __name__ == "__main__":
