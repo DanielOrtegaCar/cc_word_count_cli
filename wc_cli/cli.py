@@ -1,9 +1,10 @@
 # from funciones import count
 import click
 import sys
-from typing import Tuple, IO, List, Union,TypeAlias
+from typing import Tuple, IO, List, Union, TypeAlias
 
 result_type: TypeAlias = Tuple[str, str, str, str, str]
+
 
 def count(text_data: IO[bytes]) -> result_type:
     """

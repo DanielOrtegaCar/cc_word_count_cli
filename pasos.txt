@@ -60,7 +60,8 @@ nox
 # se pueden realizar todos los test antes de hacer commit 
 poetry add pre-commit
 para eso hay que modificar el .pre-commit-config.yaml 
-
+# sirve para corregir las versiones de los paquetes
+pre-commit autoupdate
 y ejecutar 
 poetry run pre-commit run --all-files
 
