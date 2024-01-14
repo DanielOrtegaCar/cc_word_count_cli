@@ -10,7 +10,7 @@ def count(text_data:IO[bytes])->Tuple[str,str,str,str,str]:
 
 
     Args:
-        text_data (str): text to count elements
+        text_data (IO[bytes]): text to count elements
 
     Returns:
         Tuple[str,str,str,str,str]: return bytes,chars, words, and lines like ints
@@ -20,27 +20,31 @@ def count(text_data:IO[bytes])->Tuple[str,str,str,str,str]:
     max_line_len = -9999
 
     for line in text_data:
-        # print(line)
         if max_line_len< len(line): 
             max_line_len = len(line)
-
         byte_count += len(line)
         word_count += len(line.split())
         char_count += len(line.decode() )
-        newlines += 1
+        
+        if line.decode().endswith('\n'):
+            newlines += 1
 
     return str(newlines), str(word_count), str(char_count), str(byte_count),str(max_line_len)
     
 
-def get_result(filename:str,result:tuple,count_bytes:bool)->str:
+def get_result(filename:str,result:tuple,count_bytes:bool,count_lines:bool)->str:
     newlines, word_count, char_count, byte_count,max_line_len = result
     
-    
-
     text = ""
+
+    if count_lines:
+        text = text + " {} ".format(newlines)
+
     if count_bytes:
         text = text + " {} ".format(byte_count)
 
+
+    # como manejar el caso por default (?), que deberia mostrar todos
     else:
         text = text + " ".join(result)
     # agregamos el nombre del archivo al final
@@ -49,7 +53,7 @@ def get_result(filename:str,result:tuple,count_bytes:bool)->str:
 
 
 
-def word_count(files:Union[str,List[str]], count_bytes:bool):
+def word_count(files:Union[str,List[str]], count_bytes:bool,count_lines:bool):
 
     #newline,  word, and byte 
     
@@ -61,15 +65,15 @@ def word_count(files:Union[str,List[str]], count_bytes:bool):
     for file in files:
         filename = file
 
+
         if file == "-":
             result = count(text_data=sys.stdin.buffer)
         else:
             with open(file, "rb") as file_data:
                 result = count(text_data=file_data)
 
-        
 
-        result = get_result(filename,result,count_bytes)
+        result = get_result(filename,result,count_bytes,count_lines)
         # print(result)
  
         click.echo(result)
@@ -84,9 +88,17 @@ def word_count(files:Union[str,List[str]], count_bytes:bool):
     is_flag=True,
     help="The number of bytes in each input file is written to the standard output."
 )
-def cli(files,count_bytes):
-    print(files,count_bytes)
-    word_count(files,count_bytes)
+@click.option(
+    "-l",
+    "--lines",
+    "count_lines",
+    is_flag=True,
+    help="The number of lines in the file."
+)
+def cli(files,count_bytes,count_lines):
+
+    print(files,count_bytes,count_lines)
+    word_count(files,count_bytes,count_lines)
 
 
 if __name__ == "__main__":
