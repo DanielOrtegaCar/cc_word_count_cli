@@ -70,14 +70,14 @@ def get_result(
     if count_bytes:
         text = text + " {} ".format(byte_count)
 
-    if count_bytes:
-        text = text + " {} ".format(count_chars)
+    if count_chars:
+        text = text + " {} ".format(char_count)
 
    
 
     # como manejar el caso por default (?), que deberia mostrar todos
-    if not all([count_bytes,count_words,count_lines,count_chars]):
-        text = text + " ".join(result)
+    if not any([count_bytes,count_words,count_lines,count_chars]):
+        text = text + " ".join([newlines,word_count,byte_count])
     # agregamos el nombre del archivo al final
     text = text + " {}".format(filename)
     return text
@@ -104,6 +104,7 @@ def word_count(files: Union[str, List[str]], count_bytes: bool, count_lines: boo
         # print(result)
 
         click.echo(nuevo_resultado)
+
 
 
 @click.command()
