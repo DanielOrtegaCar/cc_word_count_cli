@@ -1,0 +1,13 @@
+- poetry new
+- poetry add <package> 
+
+#[tool.poetry.scripts]
+#<nombre-app> = "<carpeta>.<archivo>:<funcion_entrada>"
+el comando sirve para decirle a la aplicacion cual sera la funcion de entrada
+
+- poetry install # para instalar paquete
+
+
+git checkout -b <nueva_rama> 
+git checkout <rama_existente>
+git rm <file>
